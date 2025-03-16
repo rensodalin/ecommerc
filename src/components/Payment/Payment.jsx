@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { FaStar } from "react-icons/fa6";
 
 const Payment = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const { cartItem } = state;
+  const cartItems = Array.isArray(state?.cartItems) ? state.cartItems : state?.cartItem ? [state.cartItem] : [];
 
   const [paymentMethod, setPaymentMethod] = useState('');
   const [formData, setFormData] = useState({
@@ -22,6 +23,10 @@ const Payment = () => {
     });
   };
 
+  const calculateTotal = () => {
+    return cartItems.reduce((total, item) => total + item.totalPrice, 0);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setShowConfirmation(true);
@@ -29,39 +34,82 @@ const Payment = () => {
     // Hide confirmation after 3 seconds and redirect to home
     setTimeout(() => {
       setShowConfirmation(false);
+      // Clear cart after successful payment
+      localStorage.removeItem('cartItems');
       navigate('/');
     }, 3000);
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="max-w-2xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-10">
-          <h1 className="text-3xl font-bold">Payment Details</h1>
-          <p className="text-gray-600">Complete your purchase</p>
+      <div className="max-w-3xl mx-auto">
+        {/* Order Summary Section */}
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-bold">Order Summary</h1>
+          <p className="text-gray-600">Review your order before payment</p>
         </div>
 
-        {/* Order Summary */}
+        {/* Products List */}
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
-          <h2 className="text-xl font-bold mb-4">Order Summary</h2>
-          <div className="flex justify-between mb-2">
-            <span>Product:</span>
-            <span>{cartItem.title}</span>
+          {cartItems.map((item, index) => (
+            <div key={index} className="flex gap-4 mb-4 pb-4 border-b last:border-b-0">
+              {/* Product Image */}
+              <div className="w-24 h-24 flex-shrink-0">
+                <img
+                  src={item.img}
+                  alt={item.title}
+                  className="w-full h-full object-cover rounded-md"
+                />
+              </div>
+
+              {/* Product Details */}
+              <div className="flex-grow">
+                <h3 className="font-semibold text-lg">{item.title}</h3>
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <FaStar className="text-yellow-400" />
+                  <span>{item.rating}</span>
+                </div>
+                <div className="grid grid-cols-2 gap-2 mt-2 text-sm">
+                  <p>Size: {item.selectedSize}</p>
+                  <p>Color: {item.selectedColor}</p>
+                  <p>Quantity: {item.quantity}</p>
+                  <p>Price: ${item.price}</p>
+                </div>
+              </div>
+
+              {/* Item Total */}
+              <div className="text-right">
+                <p className="font-semibold">${item.totalPrice.toFixed(2)}</p>
+              </div>
+            </div>
+          ))}
+
+          {/* Order Total */}
+          <div className="mt-4 pt-4 border-t">
+            <div className="flex justify-between items-center">
+              <span className="text-gray-600">Subtotal ({cartItems.length} items)</span>
+              <span className="font-semibold">${calculateTotal().toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between items-center mt-2">
+              <span className="text-gray-600">Shipping</span>
+              <span className="text-green-500">Free</span>
+            </div>
+            <div className="flex justify-between items-center mt-4 pt-4 border-t">
+              <span className="font-bold text-lg">Total</span>
+              <span className="font-bold text-lg">${calculateTotal().toFixed(2)}</span>
+            </div>
           </div>
-          <div className="flex justify-between mb-2">
-            <span>Quantity:</span>
-            <span>{cartItem.quantity}</span>
-          </div>
-          <div className="flex justify-between font-bold text-lg">
-            <span>Total Amount:</span>
-            <span>${cartItem.totalPrice.toFixed(2)}</span>
-          </div>
+        </div>
+
+        {/* Payment Section */}
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-bold">Payment Details</h2>
+          <p className="text-gray-600">Complete your purchase securely</p>
         </div>
 
         {/* Payment Method Selection */}
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
-          <h2 className="text-xl font-bold mb-4">Select Payment Method</h2>
+          <h3 className="text-xl font-bold mb-4">Select Payment Method</h3>
           <div className="grid grid-cols-2 gap-4 mb-6">
             <button
               className={`p-4 border rounded-lg flex items-center justify-center gap-2 ${
@@ -139,7 +187,7 @@ const Payment = () => {
                 type="submit"
                 className="w-full py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-md hover:scale-105 duration-300"
               >
-                Pay ${cartItem.totalPrice.toFixed(2)}
+                Pay ${calculateTotal().toFixed(2)}
               </button>
             </form>
           )}

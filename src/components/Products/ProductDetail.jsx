@@ -10,6 +10,7 @@ const ProductDetail = () => {
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
   const [quantity, setQuantity] = useState(1);
+  const [showAddedToCart, setShowAddedToCart] = useState(false);
 
   const handleAddToCart = () => {
     if (!selectedSize || !selectedColor) {
@@ -25,7 +26,19 @@ const ProductDetail = () => {
       totalPrice: product.price * quantity
     };
     
-    navigate('/cart', { state: { cartItem } });
+    // Get existing cart items
+    const existingCartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+    // Add new item
+    existingCartItems.push(cartItem);
+    // Save back to localStorage
+    localStorage.setItem('cartItems', JSON.stringify(existingCartItems));
+
+    // Show success message
+    setShowAddedToCart(true);
+    setTimeout(() => {
+      setShowAddedToCart(false);
+      navigate('/cart');
+    }, 1500);
   };
 
   return (
@@ -125,8 +138,30 @@ const ProductDetail = () => {
           >
             Add to Cart
           </button>
+
+          {/* Continue Shopping Button */}
+          <button
+            onClick={() => navigate('/')}
+            className="w-full border border-primary text-primary py-3 rounded-md hover:bg-primary hover:text-white transition-colors"
+          >
+            Continue Shopping
+          </button>
         </div>
       </div>
+
+      {/* Added to Cart Popup */}
+      {showAddedToCart && (
+        <>
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-40" />
+          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 p-8 rounded-lg shadow-xl z-50 text-center">
+            <div className="text-green-500 text-5xl mb-4">✓</div>
+            <h3 className="text-2xl font-bold mb-2">Added to Cart!</h3>
+            <p className="text-gray-600 dark:text-gray-300">
+              Redirecting to cart...
+            </p>
+          </div>
+        </>
+      )}
     </div>
   );
 };

@@ -32,7 +32,7 @@ const ProductsData = [
     color: "white",
     aosDelay: "200",
     price: 39.99,
-    colors: ["White"],
+    colors: ["White" , "Black" , "Red"],
     sizes: ["S", "M", "L", "XL"],
   },
   {
@@ -43,8 +43,8 @@ const ProductsData = [
     color: "Blue",
     aosDelay: "400",
     price: 19.99,
-    colors: ["Blue"],
-    sizes: ["One Size"],
+    colors: ["Blue" , "Red" , "Black"],
+    sizes: ["S" , "M" , "L" , "XL"],
   },
   {
     id: 4,
@@ -54,7 +54,7 @@ const ProductsData = [
     color: "pink",
     aosDelay: "600",
     price: 19.99,
-    colors: ["Pink"],
+    colors: ["Pink" , "Black" , "Red"],
     sizes: ["S", "M", "L", "XL"],
   },
   {
@@ -65,7 +65,7 @@ const ProductsData = [
     color: "dark-blue",
     aosDelay: "800",
     price: 24.99,
-    colors: ["Dark Blue"],
+    colors: ["Dark Blue", "White", "Red"],
     sizes: ["S", "M", "L", "XL"],
   },
   {
@@ -76,7 +76,7 @@ const ProductsData = [
     color: "dark-blue",
     aosDelay: "800",
     price: 24.99,
-    colors: ["Dark Blue"],
+    colors: ["Dark Blue", "White", "Red"],
     sizes: ["S", "M", "L", "XL"],
   },
   {
@@ -87,7 +87,7 @@ const ProductsData = [
     color: "dark-blue",
     aosDelay: "800",
     price: 24.99,
-    colors: ["Dark Blue"],
+    colors: ["Dark Blue", "White", "Red"],
     sizes: ["S", "M", "L", "XL"],
   },
   {
@@ -98,7 +98,7 @@ const ProductsData = [
     color: "dark-blue",
     aosDelay: "800",
     price: 24.99,
-    colors: ["Dark Blue"],
+    colors: ["Dark Blue", "White", "Red"],
     sizes: ["S", "M", "L", "XL"],
   },
   {
@@ -109,7 +109,7 @@ const ProductsData = [
     color: "dark-blue",
     aosDelay: "800",
     price: 24.99,
-    colors: ["Dark Blue"],
+    colors: ["Dark Blue", "White", "Red"],
     sizes: ["S", "M", "L", "XL"],
   },
   {
@@ -120,7 +120,7 @@ const ProductsData = [
     color: "dark-blue",
     aosDelay: "800",
     price: 24.99,
-    colors: ["Dark Blue"],
+    colors: ["Dark Blue", "White", "Red"],
     sizes: ["S", "M", "L", "XL"],
   },
 ];
