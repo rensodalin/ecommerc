@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Img1 from "../../assets/women/women1.jpg";
 import Img2 from "../../assets/women/women2.jpg";
 import Img3 from "../../assets/women/women3.jpg";
@@ -19,6 +20,9 @@ const ProductsData = [
     rating: 5.0,
     color: "Red",
     aosDelay: "0",
+    price: 29.99,
+    colors: ["Red", "Blue", "Black"],
+    sizes: ["S", "M", "L", "XL"],
   },
   {
     id: 2,
@@ -27,6 +31,9 @@ const ProductsData = [
     rating: 4.5,
     color: "white",
     aosDelay: "200",
+    price: 39.99,
+    colors: ["White"],
+    sizes: ["S", "M", "L", "XL"],
   },
   {
     id: 3,
@@ -35,6 +42,9 @@ const ProductsData = [
     rating: 4.7,
     color: "Blue",
     aosDelay: "400",
+    price: 19.99,
+    colors: ["Blue"],
+    sizes: ["One Size"],
   },
   {
     id: 4,
@@ -43,6 +53,9 @@ const ProductsData = [
     rating: 4.4,
     color: "pink",
     aosDelay: "600",
+    price: 19.99,
+    colors: ["Pink"],
+    sizes: ["S", "M", "L", "XL"],
   },
   {
     id: 5,
@@ -51,6 +64,9 @@ const ProductsData = [
     rating: 4.5,
     color: "dark-blue",
     aosDelay: "800",
+    price: 24.99,
+    colors: ["Dark Blue"],
+    sizes: ["S", "M", "L", "XL"],
   },
   {
     id: 6,
@@ -59,6 +75,9 @@ const ProductsData = [
     rating: 4.5,
     color: "dark-blue",
     aosDelay: "800",
+    price: 24.99,
+    colors: ["Dark Blue"],
+    sizes: ["S", "M", "L", "XL"],
   },
   {
     id: 7,
@@ -67,6 +86,9 @@ const ProductsData = [
     rating: 4.5,
     color: "dark-blue",
     aosDelay: "800",
+    price: 24.99,
+    colors: ["Dark Blue"],
+    sizes: ["S", "M", "L", "XL"],
   },
   {
     id: 8,
@@ -75,6 +97,9 @@ const ProductsData = [
     rating: 4.5,
     color: "dark-blue",
     aosDelay: "800",
+    price: 24.99,
+    colors: ["Dark Blue"],
+    sizes: ["S", "M", "L", "XL"],
   },
   {
     id: 9,
@@ -83,6 +108,9 @@ const ProductsData = [
     rating: 4.5,
     color: "dark-blue",
     aosDelay: "800",
+    price: 24.99,
+    colors: ["Dark Blue"],
+    sizes: ["S", "M", "L", "XL"],
   },
   {
     id: 10,
@@ -91,10 +119,19 @@ const ProductsData = [
     rating: 4.5,
     color: "dark-blue",
     aosDelay: "800",
+    price: 24.99,
+    colors: ["Dark Blue"],
+    sizes: ["S", "M", "L", "XL"],
   },
 ];
 
 const Products = () => {
+  const navigate = useNavigate();
+
+  const handleProductClick = (product) => {
+    navigate(`/product/${product.id}`, { state: { product } });
+  };
+
   return (
     <div className="mt-14 mb-12">
       <div className="container">
@@ -119,7 +156,8 @@ const Products = () => {
                 data-aos="fade-up"
                 data-aos-delay={data.aosDelay}
                 key={data.id}
-                className="space-y-3"
+                className="space-y-3 cursor-pointer hover:scale-105 transition-transform"
+                onClick={() => handleProductClick(data)}
               >
                 <img
                   src={data.img}
@@ -133,6 +171,7 @@ const Products = () => {
                     <FaStar className="text-yellow-400" />
                     <span>{data.rating}</span>
                   </div>
+                  <p className="text-primary font-semibold">${data.price}</p>
                 </div>
               </div>
             ))}

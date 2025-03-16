@@ -13,6 +13,11 @@ import Women from "./components/Pages/Women/Women";
 import Man from "./components/Pages/Man/Man"; // Changed 'Man' to lowercase for consistency
 import AOS from "aos";
 import "aos/dist/aos.css";
+import SignIn from './components/Auth/SignIn';
+import SignUp from './components/Auth/SignUp';
+import ProductDetail from './components/Products/ProductDetail';
+import Cart from './components/Cart/Cart';
+import Payment from './components/Payment/Payment';
 
 const App = () => {
   const [orderPopup, setOrderPopup] = React.useState(false);
@@ -52,6 +57,11 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/women" element={<Women />} />
           <Route path="/man" element={<Man />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/payment" element={<Payment />} />
         </Routes>
 
         <Popup orderPopup={orderPopup} setOrderPopup={setOrderPopup} />

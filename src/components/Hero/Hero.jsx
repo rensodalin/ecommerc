@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Image1 from "../../assets/hero/women.png";
 import Image2 from "../../assets/hero/shopping.png";
 import Image3 from "../../assets/hero/sale.png";
@@ -29,6 +30,20 @@ const ImageList = [
 ];
 
 const Hero = ({ handleOrderPopup }) => {
+  const navigate = useNavigate();
+  const [showAuthPopup, setShowAuthPopup] = useState(false);
+  
+  // This should be replaced with your actual auth check
+  const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+
+  const handleShopNow = () => {
+    if (isAuthenticated) {
+      navigate('/Women'); // Navigate to women's page if authenticated
+    } else {
+      setShowAuthPopup(true); // Show auth popup if not authenticated
+    }
+  };
+
   var settings = {
     dots: false,
     arrows: false,
@@ -50,7 +65,7 @@ const Hero = ({ handleOrderPopup }) => {
       <div className="container pb-8 sm:pb-0">
         <Slider {...settings}>
           {ImageList.map((data) => (
-            <div>
+            <div key={data.id}>
               <div className="grid grid-cols-1 sm:grid-cols-2">
                 {/* text content section */}
                 <div className="flex flex-col justify-center gap-4 pt-12 sm:pt-0 text-center sm:text-left order-2 sm:order-1 relative z-10">
@@ -76,10 +91,10 @@ const Hero = ({ handleOrderPopup }) => {
                     data-aos-delay="300"
                   >
                     <button
-                      onClick={handleOrderPopup}
+                      onClick={handleShopNow}
                       className="bg-gradient-to-r from-primary to-secondary hover:scale-105 duration-200 text-white py-2 px-4 rounded-full"
                     >
-                      Order Now
+                      Shop Now
                     </button>
                   </div>
                 </div>
@@ -102,6 +117,49 @@ const Hero = ({ handleOrderPopup }) => {
           ))}
         </Slider>
       </div>
+
+      {/* Authentication Popup */}
+      {showAuthPopup && (
+        <>
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={() => setShowAuthPopup(false)} />
+          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 p-8 rounded-lg shadow-xl z-50 w-[90%] max-w-md">
+            <div className="text-center">
+              <h3 className="text-2xl font-bold mb-4 dark:text-white">
+                Sign In Required
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                Please sign in or create an account to continue shopping
+              </p>
+              <div className="flex flex-col gap-3">
+                <button
+                  onClick={() => {
+                    setShowAuthPopup(false);
+                    navigate('/signin');
+                  }}
+                  className="w-full py-2 bg-gradient-to-r from-primary to-secondary text-white rounded-md hover:scale-105 duration-300"
+                >
+                  Sign In
+                </button>
+                <button
+                  onClick={() => {
+                    setShowAuthPopup(false);
+                    navigate('/signup');
+                  }}
+                  className="w-full py-2 border border-primary text-primary rounded-md hover:bg-primary hover:text-white transition-colors"
+                >
+                  Create Account
+                </button>
+                <button
+                  onClick={() => setShowAuthPopup(false)}
+                  className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

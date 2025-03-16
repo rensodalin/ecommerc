@@ -1,6 +1,37 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Hero2 = () => {
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setShowConfirmation(true);
+    
+    // Reset form
+    setFormData({
+      name: '',
+      email: '',
+      message: ''
+    });
+
+    // Hide confirmation after 3 seconds
+    setTimeout(() => {
+      setShowConfirmation(false);
+    }, 3000);
+  };
+
   return (
     <div className="bg-gray-50 dark:bg-gray-900" id="contact">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 text-center">
@@ -44,23 +75,35 @@ const Hero2 = () => {
             </div>
         </div>
         <div>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <input type="checkbox" className="hidden" style={{ display: 'none' }} name="botcheck" />
                 <div className="mb-5">
                     <input type="text" placeholder="Full Name" autoComplete="off"
                         className="w-full px-4 py-3 border-2 placeholder:text-gray-800 dark:text-white rounded-md outline-none dark:placeholder:text-gray-200 dark:bg-gray-900 focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100 dark:border-gray-600 dark:focus:border-white dark:ring-0"
-                        name="name" />
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
                 <div className="mb-5">
                     <label htmlFor="email_address" className="sr-only">Email Address</label>
                     <input id="email_address" type="email" placeholder="Email Address" autoComplete="off"
                         className="w-full px-4 py-3 border-2 placeholder:text-gray-800 dark:text-white rounded-md outline-none dark:placeholder:text-gray-200 dark:bg-gray-900 focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100 dark:border-gray-600 dark:focus:border-white dark:ring-0"
-                        name="email" />
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
                 <div className="mb-3">
                     <textarea placeholder="Your Message"
                         className="w-full px-4 py-3 border-2 placeholder:text-gray-800 dark:text-white dark:placeholder:text-gray-200 dark:bg-gray-900 rounded-md outline-none h-36 focus:ring-4 border-gray-300 focus:border-gray-600 ring-gray-100 dark:border-gray-600 dark:focus:border-white dark:ring-0"
-                        name="message">
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        required
+                    >
                     </textarea>
                 </div>
                 <button type="submit"
@@ -70,6 +113,38 @@ const Hero2 = () => {
             </form>
         </div>
     </div>
+
+    {/* Confirmation Message */}
+    {showConfirmation && (
+        <>
+            <div className="fixed inset-0 bg-black bg-opacity-50 z-40" />
+            <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl z-50">
+                <div className="text-center">
+                    <div className="mb-4 text-green-500">
+                        <svg 
+                            className="w-16 h-16 mx-auto" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            viewBox="0 0 24 24"
+                        >
+                            <path 
+                                strokeLinecap="round" 
+                                strokeLinejoin="round" 
+                                strokeWidth="2" 
+                                d="M5 13l4 4L19 7"
+                            />
+                        </svg>
+                    </div>
+                    <h3 className="text-xl font-semibold mb-2 dark:text-white">
+                        Message Sent!
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300">
+                        We will contact you soon.
+                    </p>
+                </div>
+            </div>
+        </>
+    )}
 </div>
 
   )
