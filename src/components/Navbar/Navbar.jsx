@@ -13,7 +13,7 @@ const Menu = [
   { id: 4, name: "Contact Us", link: "/contact" }, // Change link accordingly
 ];
 
-const Navbar = ({ handleOrderPopup }) => {
+const Navbar = ({ isAuthenticated, setIsAuthenticated }) => {
   const [showSignInPopup, setShowSignInPopup] = useState(false);
   const [showSignUpPopup, setShowSignUpPopup] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -60,6 +60,20 @@ const Navbar = ({ handleOrderPopup }) => {
     }
   };
 
+  const handleCartClick = () => {
+    if (!isAuthenticated) {
+      setShowSignInPopup(true);
+    } else {
+      navigate('/Women');
+    }
+  };
+
+  const handleSignIn = (e) => {
+    e.preventDefault();
+    setIsAuthenticated(true);
+    setShowSignInPopup(false);
+  };
+
   return (
     <>
       <div className="shadow-md bg-white dark:bg-gray-900 dark:text-white duration-200 relative z-40">
@@ -96,7 +110,7 @@ const Navbar = ({ handleOrderPopup }) => {
 
               {/* Order Button */}
               <button
-                onClick={handleOrderPopup}
+                onClick={handleCartClick}
                 className="bg-gradient-to-r from-primary to-secondary transition-all duration-200 text-white py-1 px-4 rounded-full flex items-center gap-3 group"
               >
                 <span className="group-hover:block hidden transition-all duration-200">
@@ -106,20 +120,29 @@ const Navbar = ({ handleOrderPopup }) => {
               </button>
 
               {/* Login & Sign Up Buttons */}
-              <div className="flex items-center gap-4">
+              {!isAuthenticated ? (
+                <div className="flex items-center gap-4">
+                  <button 
+                    onClick={() => setShowSignInPopup(true)} 
+                    className="py-2 px-4 text-white bg-primary rounded-md"
+                  >
+                    Login
+                  </button>
+                  <button 
+                    onClick={() => setShowSignUpPopup(true)} 
+                    className="py-2 px-4 text-white bg-primary rounded-md"
+                  >
+                    Sign up
+                  </button>
+                </div>
+              ) : (
                 <button 
-                  onClick={() => setShowSignInPopup(true)} 
+                  onClick={() => setIsAuthenticated(false)} 
                   className="py-2 px-4 text-white bg-primary rounded-md"
                 >
-                  Login
+                  Logout
                 </button>
-                <button 
-                  onClick={() => setShowSignUpPopup(true)} 
-                  className="py-2 px-4 text-white bg-primary rounded-md"
-                >
-                  Sign up
-                </button>
-              </div>
+              )}
             </div>
           </div>
         </div>
@@ -150,7 +173,7 @@ const Navbar = ({ handleOrderPopup }) => {
               className="absolute right-3 top-3 text-2xl cursor-pointer"
             />
             <h2 className="text-2xl font-bold mb-4">Sign In</h2>
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={handleSignIn}>
               <div>
                 <label className="block text-sm font-medium mb-1">Email</label>
                 <input
@@ -199,7 +222,11 @@ const Navbar = ({ handleOrderPopup }) => {
               className="absolute right-3 top-3 text-2xl cursor-pointer"
             />
             <h2 className="text-2xl font-bold mb-4">Sign Up</h2>
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={(e) => {
+              e.preventDefault();
+              setIsAuthenticated(true);
+              setShowSignUpPopup(false);
+            }}>
               <div>
                 <label className="block text-sm font-medium mb-1">Full Name</label>
                 <input

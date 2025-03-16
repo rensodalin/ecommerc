@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Hero from "./components/Hero/Hero";
@@ -21,6 +21,7 @@ import Payment from './components/Payment/Payment';
 
 const App = () => {
   const [orderPopup, setOrderPopup] = React.useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleOrderPopup = () => {
     setOrderPopup(!orderPopup);
@@ -38,7 +39,11 @@ const App = () => {
   return (
     <Router>
       <div className="bg-white dark:bg-gray-900 dark:text-white duration-200">
-        <Navbar handleOrderPopup={handleOrderPopup} />
+        <Navbar 
+          isAuthenticated={isAuthenticated} 
+          setIsAuthenticated={setIsAuthenticated} 
+          handleOrderPopup={handleOrderPopup} 
+        />
 
         <Routes>
           <Route
@@ -46,7 +51,7 @@ const App = () => {
             element={
               <>
                 <Hero handleOrderPopup={handleOrderPopup} />
-                <Products />
+                <Products isAuthenticated={isAuthenticated} />
                 <Subscribe />
                 <TopProducts handleOrderPopup={handleOrderPopup} />
                 <Footer />

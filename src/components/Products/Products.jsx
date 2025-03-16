@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Img1 from "../../assets/women/women1.jpg";
 import Img2 from "../../assets/women/women2.jpg";
@@ -11,6 +11,7 @@ import Img8 from "../../assets/women/man2.jpg";
 import Img9 from "../../assets/women/man3.jpg";
 import Img10 from "../../assets/women/man4.jpg";
 import { FaStar } from "react-icons/fa6";
+import { IoCloseOutline } from "react-icons/io5";
 
 const ProductsData = [
   {
@@ -125,11 +126,16 @@ const ProductsData = [
   },
 ];
 
-const Products = () => {
+const Products = ({ isAuthenticated }) => {
   const navigate = useNavigate();
 
   const handleProductClick = (product) => {
-    navigate(`/product/${product.id}`, { state: { product } });
+    console.log('Authentication status:', isAuthenticated);
+    if (!isAuthenticated) {
+      alert("Please sign in to view product details");
+    } else {
+      navigate(`/product/${product.id}`, { state: { product } });
+    }
   };
 
   return (
