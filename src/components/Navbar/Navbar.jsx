@@ -79,25 +79,26 @@ const Navbar = ({ isAuthenticated, setIsAuthenticated }) => {
       <div className="shadow-md bg-white dark:bg-gray-900 dark:text-white duration-200 relative z-40">
         {/* Upper Navbar */}
         <div className="bg-primary/40 py-2">
-          <div className="container flex justify-between items-center">
-            {/* Logo */}
-            <div>
-              <Link to="/" className="font-bold text-2xl sm:text-3xl flex gap-2 me-9">
-                <img src={Logo} alt="Logo" className="w-10" />
-                NorthStar
+          <div className="container px-4 mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            {/* Logo - Modified for better responsive behavior */}
+            <div className="w-full sm:w-auto flex justify-center sm:justify-start">
+              <Link to="/" className="font-bold text-xl sm:text-2xl md:text-3xl flex items-center gap-2">
+                <img src={Logo} alt="Logo" className="w-8 sm:w-10" />
+                <span className="inline">NorthStar</span>
               </Link>
             </div>
 
-            {/* Search Bar & Buttons */}
-            <div className="flex justify-between items-center gap-4">
-              <div className="relative group hidden sm:block">
-                <form onSubmit={handleSearch}>
+            {/* Search Bar & Buttons - Improved responsive layout */}
+            <div className="w-full sm:w-auto flex flex-col sm:flex-row items-center gap-4">
+              {/* Search Bar */}
+              <div className="w-full sm:w-auto relative group">
+                <form onSubmit={handleSearch} className="w-full sm:w-auto">
                   <input
                     type="text"
                     placeholder="Search"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-[200px] sm:w-[200px] group-hover:w-[300px] transition-all duration-300 rounded-full border border-gray-300 px-2 py-1 focus:outline-none focus:border-1 focus:border-primary dark:border-gray-500 dark:bg-gray-800"
+                    className="w-full sm:w-[200px] md:w-[200px] group-hover:md:w-[300px] transition-all duration-300 rounded-full border border-gray-300 px-2 py-1 focus:outline-none focus:border-1 focus:border-primary dark:border-gray-500 dark:bg-gray-800"
                   />
                   <button
                     type="submit"
@@ -108,53 +109,56 @@ const Navbar = ({ isAuthenticated, setIsAuthenticated }) => {
                 </form>
               </div>
 
-              {/* Order Button */}
-              <button
-                onClick={handleCartClick}
-                className="bg-gradient-to-r from-primary to-secondary transition-all duration-200 text-white py-1 px-4 rounded-full flex items-center gap-3 group"
-              >
-                <span className="group-hover:block hidden transition-all duration-200">
-                  Order
-                </span>
-                <FaCartShopping className="text-xl text-white drop-shadow-sm cursor-pointer" />
-              </button>
-
-              {/* Login & Sign Up Buttons */}
-              {!isAuthenticated ? (
-                <div className="flex items-center gap-4">
-                  <button 
-                    onClick={() => setShowSignInPopup(true)} 
-                    className="py-2 px-4 text-white bg-primary rounded-md"
-                  >
-                    Login
-                  </button>
-                  <button 
-                    onClick={() => setShowSignUpPopup(true)} 
-                    className="py-2 px-4 text-white bg-primary rounded-md"
-                  >
-                    Sign up
-                  </button>
-                </div>
-              ) : (
-                <button 
-                  onClick={() => setIsAuthenticated(false)} 
-                  className="py-2 px-4 text-white bg-primary rounded-md"
+              {/* Order and Auth Buttons */}
+              <div className="flex items-center gap-2 sm:gap-4">
+                {/* Order Button */}
+                <button
+                  onClick={handleCartClick}
+                  className="bg-gradient-to-r from-primary to-secondary transition-all duration-200 text-white py-1 px-3 sm:px-4 rounded-full flex items-center gap-2 sm:gap-3 group"
                 >
-                  Logout
+                  <span className="group-hover:block hidden transition-all duration-200">
+                    Order
+                  </span>
+                  <FaCartShopping className="text-lg sm:text-xl text-white drop-shadow-sm cursor-pointer" />
                 </button>
-              )}
+
+                {/* Login & Sign Up Buttons */}
+                {!isAuthenticated ? (
+                  <div className="flex items-center gap-2 sm:gap-4">
+                    <button 
+                      onClick={() => setShowSignInPopup(true)} 
+                      className="py-1 sm:py-2 px-2 sm:px-4 text-sm sm:text-base text-white bg-primary rounded-md"
+                    >
+                      Login
+                    </button>
+                    <button 
+                      onClick={() => setShowSignUpPopup(true)} 
+                      className="py-1 sm:py-2 px-2 sm:px-4 text-sm sm:text-base text-white bg-primary rounded-md"
+                    >
+                      Sign up
+                    </button>
+                  </div>
+                ) : (
+                  <button 
+                    onClick={() => setIsAuthenticated(false)} 
+                    className="py-1 sm:py-2 px-2 sm:px-4 text-sm sm:text-base text-white bg-primary rounded-md"
+                  >
+                    Logout
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Lower Navbar */}
+        {/* Lower Navbar - Modified for better responsive behavior */}
         <div data-aos="zoom-in" className="flex justify-center bg-primary/40">
-          <ul className="sm:flex hidden items-center gap-8 w-full justify-center bg-white px-8">
+          <ul className="hidden sm:flex items-center gap-4 md:gap-8 w-full justify-center bg-white px-4 md:px-8">
             {Menu.map((data) => (
               <li key={data.id}>
                 <Link
                   to={data.link}
-                  className="inline-block px-4 py-2 hover:text-white duration-200"
+                  className="inline-block px-2 md:px-4 py-2 text-sm md:text-base hover:text-white duration-200"
                 >
                   {data.name}
                 </Link>
