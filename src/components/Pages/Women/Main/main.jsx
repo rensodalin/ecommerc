@@ -272,7 +272,7 @@ const Main = () => {
         {WomenProductsData.map((data) => (
           <div 
             key={data.id} 
-            className="relative group"
+            className="relative group cursor-pointer"
             onClick={() => handleProductClick(data)}
           >
             {/* Image */}

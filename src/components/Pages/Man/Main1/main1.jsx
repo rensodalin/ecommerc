@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 // Import local images
 import pic1 from '../../../../assets/Products/pro19.jpg';
@@ -23,24 +24,25 @@ import pic18 from '../../../../assets/Products/pro36.jpg';
 
 // Store images in an object with correct keys
 const imageMap = {
-  "pro36": pic1,
-  "pro19": pic2,
-  "pro20": pic3,
-  "pro21": pic4,
-  "pro22": pic5,
-  "pro23": pic6,
-  "pro24": pic7,
-  "pro25": pic8,
-  "pro26": pic9,
-  "pro27": pic10,
-  "pro28": pic11,
-  "pro29": pic12,
-  "pro30": pic13,
-  "pro31": pic14,
-  "pro32": pic15,
-  "pro33": pic16,
-  "pro34": pic17,
-  "pro35": pic18
+  "pro19": pic1,
+  "pro20": pic2,
+  "pro21": pic3,
+  "pro22": pic4,
+  "pro23": pic5,
+  "pro24": pic6,
+  "pro25": pic7,
+  "pro26": pic8,
+  "pro27": pic9,
+  "pro28": pic10,
+  "pro29": pic11,
+  "pro30": pic12,
+  "pro31": pic13,
+  "pro32": pic14,
+  "pro33": pic15,
+  "pro34": pic16,
+  "pro35": pic17,
+  "pro36": pic18,
+  "pro36": pic16
 };
 
 // Example prices for each product
@@ -62,32 +64,220 @@ const prices = {
   "pro32": "$42",
   "pro33": "$48",
   "pro34": "$52",
-  "pro35": "$58"
+  "pro35": "$58",
+  "pro36": "$62"
 };
 
-const Main = () => {
-  // Make sure the src keys match the ones in imageMap
-  const imageItems = [
-    { src: "pro36", alt: "Long Sleeve Shirt" },
-    { src: "pro19", alt: "Casual T-Shirt" },
-    { src: "pro20", alt: "Hoodie" },
-    { src: "pro21", alt: "Denim Jacket" },
-    { src: "pro22", alt: "Formal Shirt" },
-    { src: "pro23", alt: "Leather Jacket" },
-    { src: "pro24", alt: "Sweater" },
-    { src: "pro25", alt: "Winter Coat" },
-    { src: "pro26", alt: "Polo Shirt" },
-    { src: "pro27", alt: "Track Jacket" },
-    { src: "pro28", alt: "Blazer" },
-    { src: "pro29", alt: "Tank Top" },
-    { src: "pro30", alt: "Cardigan" },
-    { src: "pro31", alt: "Windbreaker" },
-    { src: "pro32", alt: "Fleece Jacket" },
-    { src: "pro33", alt: "Down Jacket" },
-    { src: "pro34", alt: "Parka" },
-    { src: "pro35", alt: "Pea Coat" }
+const MenProductsData = [
+  {
+    id: 19,
+    img: pic2,
+    title: "Casual T-Shirt",
+    rating: 4.5,
+    color: "Black",
+    aosDelay: "0",
+    price: 25,
+    colors: ["White", "Black", "Gray"],
+    sizes: ["S", "M", "L", "XL"],
+  },
+  {
+    id: 20,
+    img: pic3,
+    title: "Hoodie",
+    rating: 4.5,
+    color: "Gray",
+    aosDelay: "200",
+    price: 30,
+    colors: ["Gray", "Black", "Blue"],
+    sizes: ["S", "M", "L", "XL"],
+  },
+  {
+    id: 21,
+    img: pic4,
+    title: "Denim Jacket",
+    rating: 4.5,
+    color: "Black",
+    aosDelay: "200",
+    price: 22,
+    colors: ["Black", "Blue", "Gray"],
+    sizes: ["S", "M", "L", "XL"],
+  },
+  {
+    id: 22,
+    img: pic5,
+    title: "Formal Shirt",
+    rating: 4.5,
+    color: "Black",
+    aosDelay: "200",
+    price: 25,
+    colors: ["White", "Black", "Gray"],
+    sizes: ["S", "M", "L", "XL"],
+  },
+  {
+    id: 23,
+    img: pic6,
+    title: "Leather Jacket",
+    rating: 4.5,
+    color: "Black",
+    aosDelay: "200",
+    price: 25,
+    colors: ["White", "Black", "Gray"],
+    sizes: ["S", "M", "L", "XL"],
+  },
+  {
+    id: 24,
+    img: pic7,
+    title: "Sweater",
+    rating: 4.5,
+    color: "Black",
+    aosDelay: "200",
+    price: 25,
+    colors: ["White", "Black", "Gray"],
+    sizes: ["S", "M", "L", "XL"],
+  },
+  {
+    id: 25,
+    img: pic8,
+    title: "Winter Coat",
+    rating: 4.5,
+    color: "Black",
+    aosDelay: "200",
+    price: 25,
+    colors: ["White", "Black", "Gray"],
+    sizes: ["S", "M", "L", "XL"],
+  },
+  {
+    id: 26,
+    img: pic9,
+    title: "Polo Shirt",
+    rating: 4.5,
+    color: "Black",
+    aosDelay: "200",
+    price: 25,
+    colors: ["White", "Black", "Gray"],
+    sizes: ["S", "M", "L", "XL"],
+  },
+  {
+    id: 27,
+    img: pic10,
+    title: "Track Jacket",
+    rating: 4.5,
+    color: "Black",
+    aosDelay: "200",
+    price: 25,
+    colors: ["White", "Black", "Gray"],
+    sizes: ["S", "M", "L", "XL"],
+  },
+  {
+    id: 28,
+    img: pic11,
+    title: "Blazer",
+    rating: 4.5,
+    color: "Black",
+    aosDelay: "200",
+    price: 25,
+    colors: ["White", "Black", "Gray"],
+    sizes: ["S", "M", "L", "XL"],
+  },
+  {
+    id: 29,
+    img: pic12,
+    title: "Tank Top",
+    rating: 4.5,
+    color: "Black",
+    aosDelay: "200",
+    price: 25,
+    colors: ["White", "Black", "Gray"],
+    sizes: ["S", "M", "L", "XL"],
+  },
+  {
+    id: 30,
+    img: pic13,
+    title: "Cardigan",
+    rating: 4.5,
+    color: "Black",
+    aosDelay: "200",
+    price: 25,
+    colors: ["White", "Black", "Gray"],
+    sizes: ["S", "M", "L", "XL"],
+  },
+  {
+    id: 31,
+    img: pic14,
+    title: "Windbreaker",
+    rating: 4.5,
+    color: "Black",
+    aosDelay: "200",
+    price: 25,
+    colors: ["White", "Black", "Gray"],
+    sizes: ["S", "M", "L", "XL"],
+  },
+  {
+    id: 32,
+    img: pic15,
+    title: "Fleece Jacket",
+    rating: 4.5,
+    color: "Black",
+    aosDelay: "200",
+    price: 25,
+    colors: ["White", "Black", "Gray"],
+    sizes: ["S", "M", "L", "XL"],
+  },
+  {
+    id: 33,
+    img: pic16,
+    title: "Down Jacket",
+    rating: 4.5,
+    color: "Black",
+    aosDelay: "200",
+    price: 25,
+    colors: ["White", "Black", "Gray"],
+    sizes: ["S", "M", "L", "XL"],
+  },
+  {
+    id: 34,
+    img: pic17,
+    title: "Parka",
+    rating: 4.5,
+    color: "Black",
+    aosDelay: "200",
+    price: 25,
+    colors: ["White", "Black", "Gray"],
+    sizes: ["S", "M", "L", "XL"],
+  },
+  {
+    id: 35,
+    img: pic18,
+    title: "Pea Coat",
+    rating: 4.5,
+    color: "Black",
+    aosDelay: "200",
+    price: 25,
+    colors: ["White", "Black", "Gray"],
+    sizes: ["S", "M", "L", "XL"],
+  },
+  {
+    id: 36,
+    img: pic16,
+    title: "Down Jacket",
+    rating: 4.5,
+    color: "Black",
+    aosDelay: "200",
+    price: 25,
+    colors: ["White", "Black", "Gray"],
+    sizes: ["S", "M", "L", "XL"],
+  },
 
-  ];
+  
+  // ... Add similar objects for all other products
+];
+
+const Main = () => {
+  const navigate = useNavigate();
+
+  const handleProductClick = (product) => {
+    navigate(`/product/${product.id}`, { state: { product } });
+  };
 
   return (
     <div className="container mx-auto px-4">
@@ -98,25 +288,29 @@ const Main = () => {
 
       {/* Image Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20">
-        {imageItems.map((item, index) => (
-          <div key={index} className="relative group">
+        {MenProductsData.map((data) => (
+          <div 
+            key={data.id} 
+            className="relative group cursor-pointer"
+            onClick={() => handleProductClick(data)}
+          >
             {/* Image */}
             <img
-              src={imageMap[item.src]} // Get image from the map
-              alt={item.alt}
-              className="w-full h-auto object-cover rounded-md"
-              loading="lazy" // Lazy loading images
+              src={data.img}
+              alt={data.title}
+              className="w-full h-auto object-cover rounded-md cursor-pointer"
+              loading="lazy"
             />
 
             {/* Overlay text */}
             <p className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-2xl text-white font-medium opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out">
-              {item.alt}
+              {data.title}
             </p>
 
             {/* Product Name and Price */}
             <div className="mt-2 text-center">
-              <p className="font-medium text-lg">{item.alt}</p>
-              <p className="text-lg font-semibold text-gray-800">{prices[item.src]}</p>
+              <p className="font-medium text-lg">{data.title}</p>
+              <p className="text-lg font-semibold text-gray-800">${data.price}</p>
             </div>
           </div>
         ))}
